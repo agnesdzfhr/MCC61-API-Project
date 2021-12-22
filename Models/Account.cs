@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MCC61_API_Project.Models
 {
-    [Table("tb_m_account")]
+    [Table("tb_tr_account")]
     public class Account
     {
         [Key]
