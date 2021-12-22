@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MCC61_API_Project.Models
 {
+    [Table("tb_m_employee")]
     public class Employee
     {
         [Key]
