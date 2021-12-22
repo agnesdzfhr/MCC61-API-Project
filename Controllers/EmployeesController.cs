@@ -25,25 +25,19 @@ namespace MCC61_API_Project.Controllers
             try
             {
                 var insert = employeeRepository.Insert(employee);
-                if (insert == 1)
+
+                switch (insert)
                 {
-                    return Ok(new { status = HttpStatusCode.OK, insert, message = "Input Data Success" });
-                }
-                else if (insert == 2)
-                {
-                    return Ok(new { status = HttpStatusCode.Conflict, message = "NIK Already Used" });
-                }
-                else if (insert == 3)
-                {
-                    return Ok(new { status = HttpStatusCode.Conflict, message = "Phone Already Used" });
-                }
-                else if (insert == 4)
-                {
-                    return Ok(new { status = HttpStatusCode.Conflict, message = "Email Already Used" });
-                }
-                else
-                {
-                    return Ok(new { status = HttpStatusCode.Conflict, message = "Input Data Failed" });
+                    case 1:
+                        return Ok(new { status = HttpStatusCode.OK, insert, message = "Input Data Success" });               
+                    case 2:
+                        return Ok(new { status = HttpStatusCode.Conflict, message = "NIK Already Used" });
+                    case 3:
+                        return Ok(new { status = HttpStatusCode.Conflict, message = "Phone Already Used" });
+                    case 4:
+                        return Ok(new { status = HttpStatusCode.Conflict, message = "Email Already Used" });
+                    default:
+                        return Ok(new { status = HttpStatusCode.Conflict, message = "Input Data Failed" });
                 }
             }
             catch (Exception e)
@@ -114,26 +108,21 @@ namespace MCC61_API_Project.Controllers
             try
             {
                 var update = employeeRepository.Update(NIK, employee);
-                if (update == 1)
+
+                switch (update)
                 {
-                    return Ok(new { status = HttpStatusCode.OK, update = update, message = $"Succesfully Updated Data with NIK {NIK}" });
+                    case 1:
+                        return Ok(new { status = HttpStatusCode.OK, update, message = $"Succesfully Updated Data with NIK {NIK}" });
+                    case 2:
+                        return Ok(new { status = HttpStatusCode.Conflict, message = "NIK Not Found" });
+                    case 3:
+                        return Ok(new { status = HttpStatusCode.Conflict, message = "Phone Already Used" });
+                    case 4:
+                        return Ok(new { status = HttpStatusCode.Conflict, message = "Email Already Used" });
+                    default:
+                        return Ok(new { status = HttpStatusCode.Conflict, message = "No Data Change" });
                 }
-                else if (update == 2)
-                {
-                    return Ok(new { status = HttpStatusCode.NotFound, message = "NIK Not Found" });
-                }
-                else if (update == 3)
-                {
-                    return Ok(new { status = HttpStatusCode.Conflict, message = "Phone Already Used" });
-                }
-                else if (update == 4)
-                {
-                    return Ok(new { status = HttpStatusCode.Conflict, message = "Email Already Used" });
-                }
-                else
-                {
-                    return Ok(new { status = HttpStatusCode.NotModified, message = "No Data Change" });
-                }
+
             }
             catch (Exception e)
             {
