@@ -14,7 +14,9 @@ namespace MCC61_API_Project.Context
 
         }
         public DbSet<Employee> Employees { get; set; } //menghubungi table ke database di sql server
-        public DbSet<Account> Account { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<University> Universities { get; set; }
+        public DbSet<Education> Educations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +24,10 @@ namespace MCC61_API_Project.Context
                 .HasOne(e => e.Account)
                 .WithOne(a => a.Employee)
                 .HasForeignKey<Account>(a=>a.NIK); //foreign key sesuaikan dengan yang di erd
+
+            modelBuilder.Entity<University>()
+                .HasMany(u => u.Educations)
+                .WithOne(ed => ed.University);
         }
     }
 }

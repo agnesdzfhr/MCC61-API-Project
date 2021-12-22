@@ -4,14 +4,16 @@ using MCC61_API_Project.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MCC61_API_Project.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20211222073152_addModelEducationAndUniversitasAndFixingNameAccount")]
+    partial class addModelEducationAndUniversitasAndFixingNameAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace MCC61_API_Project.Migrations
 
             modelBuilder.Entity("MCC61_API_Project.Models.Education", b =>
                 {
-                    b.Property<int>("EducationID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -48,7 +50,7 @@ namespace MCC61_API_Project.Migrations
                     b.Property<int>("UniversityID")
                         .HasColumnType("int");
 
-                    b.HasKey("EducationID");
+                    b.HasKey("ID");
 
                     b.HasIndex("UniversityID");
 
@@ -94,7 +96,7 @@ namespace MCC61_API_Project.Migrations
 
             modelBuilder.Entity("MCC61_API_Project.Models.University", b =>
                 {
-                    b.Property<int>("UniversityID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -102,7 +104,7 @@ namespace MCC61_API_Project.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UniversityID");
+                    b.HasKey("ID");
 
                     b.ToTable("tb_m_university");
                 });
