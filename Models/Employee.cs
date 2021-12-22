@@ -41,6 +41,10 @@ namespace MCC61_API_Project.Models
         [Required(ErrorMessage = "Gender is Required")]
         [Range(0, 1, ErrorMessage = "Must be 0 for Male or 1 for Female")]
         public Gender Gender { get; set; }
+
+
+        //untuk relasi ke account
+        public Account Account;
     }
 
     public enum Gender
