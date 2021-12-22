@@ -27,11 +27,11 @@ namespace MCC61_API_Project.Controllers
             return Ok(result);
         }
 
-        //[HttpGet("{key}")]
-        //public ActionResult<Entity> Get(Key key)
-        //{
-        //    var result = repository.Get(key);
-        //    return Ok(result);
-        //}
+        [HttpGet("{key}")]
+        public ActionResult<Entity> Get(Key key)
+        {
+            var result = repository.Get(key);
+            return Ok(result);
+        }
     }
 }
