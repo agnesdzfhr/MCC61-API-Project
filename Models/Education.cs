@@ -14,7 +14,12 @@ namespace MCC61_API_Project.Models
         public int EducationID { get; set; }
         public string Degree { get; set; }
         public float GPA { get; set; }
+
+        //relasi dengan University
         public University University { get; set; }
         public int UniversityID { get; set; }
+
+        //relasi dengan profiling
+        public ICollection<Profiling> Profilings { get; set; }
     }
 }

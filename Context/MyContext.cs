@@ -17,6 +17,7 @@ namespace MCC61_API_Project.Context
         public DbSet<Account> Accounts { get; set; }
         public DbSet<University> Universities { get; set; }
         public DbSet<Education> Educations { get; set; }
+        public DbSet<Profiling> Profilings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +29,15 @@ namespace MCC61_API_Project.Context
             modelBuilder.Entity<University>()
                 .HasMany(u => u.Educations)
                 .WithOne(ed => ed.University);
+
+            modelBuilder.Entity<Education>()
+                .HasMany(ed => ed.Profilings)
+                .WithOne(p => p.Education);
+
+            modelBuilder.Entity<Account>()
+                .HasOne(a => a.Profiling)
+                .WithOne(p => p.Account)
+                .HasForeignKey<Profiling>(p => p.NIK);
         }
     }
 }

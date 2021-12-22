@@ -44,7 +44,7 @@ namespace MCC61_API_Project.Models
 
 
         //untuk relasi ke account
-        public Account Account;
+        public Account Account { get; set; }
     }
 
     public enum Gender

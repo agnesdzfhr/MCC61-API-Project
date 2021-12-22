@@ -18,6 +18,9 @@ namespace MCC61_API_Project.Models
         public string password { get; set; }
 
         // untuk relasi ke employee
-        public Employee Employee;
+        public Employee Employee { get; set; }
+
+        //relasi ke profiling
+        public Profiling Profiling { get; set; }
     }
 }
