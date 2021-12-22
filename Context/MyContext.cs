@@ -14,5 +14,6 @@ namespace MCC61_API_Project.Context
 
         }
         public DbSet<Employee> Employees { get; set; } //menghubungi table ke database di sql server
+        public DbSet<Account> Account { get; set; }
     }
 }

@@ -11,7 +11,6 @@ namespace MCC61_API_Project.Models
     public class Employee
     {
         [Key]
-        [Required(ErrorMessage = "NIK is Required")]
         [Range(10000, 99999, ErrorMessage = "NIK Must be 5 digit")]
         public string NIK { get; set; }
 
