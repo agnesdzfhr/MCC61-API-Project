@@ -12,7 +12,7 @@ namespace MCC61_API_Project.Models
     {
         [Key]
         public string NIK { get; set; }
-        
+
         //relasi dengan Account
         public Account Account { get; set; }
 

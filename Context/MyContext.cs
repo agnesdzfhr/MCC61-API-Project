@@ -21,11 +21,6 @@ namespace MCC61_API_Project.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>()
-                .HasOne(e => e.Account)
-                .WithOne(a => a.Employee)
-                .HasForeignKey<Account>(a=>a.NIK); //foreign key sesuaikan dengan yang di erd
-
             modelBuilder.Entity<University>()
                 .HasMany(u => u.Educations)
                 .WithOne(ed => ed.University);
@@ -33,6 +28,11 @@ namespace MCC61_API_Project.Context
             modelBuilder.Entity<Education>()
                 .HasMany(ed => ed.Profilings)
                 .WithOne(p => p.Education);
+
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.Account)
+                .WithOne(a => a.Employee)
+                .HasForeignKey<Account>(a=>a.NIK); //foreign key sesuaikan dengan yang di erd
 
             modelBuilder.Entity<Account>()
                 .HasOne(a => a.Profiling)
