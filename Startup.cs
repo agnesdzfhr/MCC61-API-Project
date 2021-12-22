@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MCC61_API_Project.Context;
 using MCC61_API_Project.Repository;
+using MCC61_API_Project.Repository.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +31,7 @@ namespace MCC61_API_Project
         {
             services.AddControllers();
             services.AddScoped<EmployeeRepository>();
+            services.AddScoped<UniversityRepository>();
             services.AddDbContext<MyContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("API"))); //untuk manggil apsettings.json
         }
