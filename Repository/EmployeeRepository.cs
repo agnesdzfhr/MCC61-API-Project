@@ -76,7 +76,7 @@ namespace MCC61_API_Project.Repository
                 bool isTrue = checkDataString != employeeString;
                 if (isTrue == true)
                 {
-                    if (checkData.Phone != employee.Phone || checkData.Email != employee.Email)
+                    if (checkData.Phone != employee.Phone)
                     {
                         if (myContext.Employees.Where(e => e.Phone == employee.Phone).FirstOrDefault() != null)
                         {
