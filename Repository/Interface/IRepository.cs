@@ -11,7 +11,7 @@ namespace MCC61_API_Project.Repository.Interface
         IEnumerable<Entity> Get();
         Entity Get(Key key); //Key ini nanti akan mewakili tipe data key dari setiap class
         int Insert(Entity entity);
-        int Update(Key key, Entity entity);
+        int Update(Entity entity);
         int Delete(Key key);
     }
 }

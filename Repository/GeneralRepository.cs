@@ -50,7 +50,7 @@ namespace MCC61_API_Project.Repository
             return result;
         }
 
-        public virtual int Update(Key key, Entity entity) 
+        public virtual int Update(Entity entity) 
         {
             if (entity == null)
                 throw new ArgumentException("enity");

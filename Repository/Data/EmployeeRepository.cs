@@ -9,16 +9,35 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MCC61_API_Project.Repository
 {
-    public class EmployeeRepository : GeneralRepository<MyContext, Employee, string>
+    public class EmployeeRepository : IEmployeeRepository 
     {
         private readonly MyContext myContext; //koneksi dengan database
-        public EmployeeRepository(MyContext myContext) : base(myContext)
+        public EmployeeRepository(MyContext myContext)
         {
             this.myContext = myContext;
         }
 
+        public int Delete(string NIK)
+        {
+            var entity = myContext.Employees.Find(NIK);
+            myContext.Remove(entity);
+            var respond = myContext.SaveChanges();
+            return respond;
+        }
 
-        public override int Insert(Employee employee) //EmployeesRpository.cs
+        public IEnumerable<Employee> Get()
+        {
+            return myContext.Employees.ToList(); //Get Data From Employee
+        }
+
+        public Employee Get(string NIK)
+        {
+            return myContext.Employees.Find(NIK); //harus primary key
+            //return myContext.Employees.Where(e => e.NIK == NIK).SingleOrDefault(); //atribut yang ditemukan harus satu atau single
+            //return myContext.Employees.Where(e => e.NIK == NIK).FirstOrDefault(); //hanya munculin yg pertama muncul, sisa datanya gadimunculin
+        }
+
+        public int Insert(Employee employee) //EmployeesRpository.cs
         {
             var checkdataNIK = myContext.Employees.Find(employee.NIK);
             var checkdataPhone = myContext.Employees.Where(e =>
@@ -39,15 +58,13 @@ namespace MCC61_API_Project.Repository
             }
             else
             {
-                var empCount = this.Get().Count() + 1;
-                var year = DateTime.Now.Year;
                 myContext.Employees.Add(employee);
                 int respond = myContext.SaveChanges();
                 return respond;
             }
         }
 
-        public override int Update(string NIK, Employee employee) // EmployeesRepository.cs
+        public int Update(string NIK, Employee employee) // EmployeesRepository.cs
         {
             var checkData = myContext.Employees.AsNoTracking().Where(e => e.NIK == NIK).FirstOrDefault();
             if (checkData != null)

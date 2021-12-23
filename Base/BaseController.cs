@@ -21,16 +21,37 @@ namespace MCC61_API_Project.Controllers
         }
 
         [HttpGet]
-        public ActionResult<Entity> Get()
+        public virtual ActionResult<Entity> Get()
         {
             var result = repository.Get();
             return Ok(result);
         }
 
         [HttpGet("{key}")]
-        public ActionResult<Entity> Get(Key key)
+        public virtual ActionResult<Entity> Get(Key key)
         {
             var result = repository.Get(key);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public virtual ActionResult<Entity> Insert(Entity entity)
+        {
+            var result = repository.Insert(entity);
+            return Ok(result);
+        }
+
+        [HttpPut("{key}")]
+        public virtual ActionResult<Entity> Update(Entity entity)
+        {
+            var result = repository.Update(entity);
+            return Ok(result);
+        }
+
+        [HttpDelete("{key}")]
+        public virtual ActionResult<Entity> Delete(Key key)
+        {
+            var result = repository.Delete(key);
             return Ok(result);
         }
     }
