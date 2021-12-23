@@ -11,7 +11,7 @@ namespace MCC61_API_Project.Repository.Data
     {
         public UniversityRepository(MyContext myContext) : base(myContext)
         {
-
+           
         }
     }
 }

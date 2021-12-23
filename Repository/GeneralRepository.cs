@@ -21,7 +21,7 @@ namespace MCC61_API_Project.Repository
             entities = myContext.Set<Entity>();
         }
 
-        public int Delete(Key key)
+        public virtual int Delete(Key key)
         {
             var entity = entities.Find(key);
             if (entity == null)
@@ -31,17 +31,17 @@ namespace MCC61_API_Project.Repository
             return result;
         }
 
-        public IEnumerable<Entity> Get()
+        public virtual IEnumerable<Entity> Get()
         {
             return entities.ToList();
         }
 
-        public Entity Get(Key key)
+        public virtual Entity Get(Key key)
         {
             return entities.Find(key);
         }
 
-        public int Insert(Entity entity)
+        public virtual int Insert(Entity entity)
         {
             if (entity == null)
                 throw new ArgumentException("enity");
@@ -50,7 +50,7 @@ namespace MCC61_API_Project.Repository
             return result;
         }
 
-        public int Update(Key key, Entity entity) 
+        public virtual int Update(Key key, Entity entity) 
         {
             if (entity == null)
                 throw new ArgumentException("enity");

@@ -11,10 +11,10 @@ namespace MCC61_API_Project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UniversityController : BaseController<University, UniversityRepository, int>
+    public class UniversitiesController : BaseController<University, UniversityRepository, int>
     {
         private readonly UniversityRepository universityRepository;
-        public UniversityController(UniversityRepository universityRepository) : base(universityRepository)
+        public UniversitiesController(UniversityRepository universityRepository) : base(universityRepository)
         {
             this.universityRepository = universityRepository;
         }
