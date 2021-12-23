@@ -38,8 +38,8 @@ namespace MCC61_API_Project.Models
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Gender is Required")]
-        [Range(0, 1, ErrorMessage = "Must be 0 for Male or 1 for Female")]
+        //[Required(ErrorMessage = "Gender is Required")]
+        //[Range(0, 1, ErrorMessage = "Must be 0 for Male or 1 for Female")]
         public Gender Gender { get; set; }
 
 
