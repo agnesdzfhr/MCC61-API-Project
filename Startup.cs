@@ -30,6 +30,7 @@ namespace MCC61_API_Project
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<OldEmployeeRepository>();
             services.AddScoped<EmployeeRepository>();
             services.AddScoped<UniversityRepository>();
             services.AddScoped<EducationRepository>();
