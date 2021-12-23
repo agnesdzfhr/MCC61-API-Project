@@ -19,7 +19,7 @@ namespace MCC61_API_Project.Repository.Data
         public int Register(RegisterVM registerVM)
         {
             var year = DateTime.Now.Year;
-            var empCount = this.Get().Count() + 1;
+            var empCount = context.Employees.ToList().Count + 1;
             var employee = new Employee
             {
                 NIK = year+ '0' + empCount.ToString(),
