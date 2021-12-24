@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MCC61_API_Project.Models
@@ -12,14 +13,19 @@ namespace MCC61_API_Project.Models
     {
         [Key]
         public int EducationID { get; set; }
+        [Required(ErrorMessage ="Degree is Required")]
         public string Degree { get; set; }
+        [Required(ErrorMessage = "GPA is Required")]
         public float GPA { get; set; }
 
         //relasi dengan University
-        public University University { get; set; }
+        [JsonIgnore]
+        public virtual University University { get; set; }
+        [Required(ErrorMessage = "UniversityID is Required")]
         public int UniversityID { get; set; }
 
         //relasi dengan profiling
-        public ICollection<Profiling> Profilings { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Profiling> Profilings { get; set; }
     }
 }

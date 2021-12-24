@@ -18,45 +18,58 @@ namespace MCC61_API_Project.Repository.Data
 
         public int Register(RegisterVM registerVM)
         {
-            var year = DateTime.Now.Year;
-            var empCount = context.Employees.ToList().Count + 1;
-            var employee = new Employee
+            var checkPhone = context.Employees.Where(p => p.Phone == registerVM.Phone).FirstOrDefault();
+            var checkEmail = context.Employees.Where(p => p.Email == registerVM.Email).FirstOrDefault();
+            var formattedNIK = DateTime.Now.Year.ToString() + "0" + (context.Employees.ToList().Count + 1).ToString();
+            if (checkPhone != null)
             {
-                NIK = year+ '0' + empCount.ToString(),
-                FirstName = registerVM.FirstName,
-                LastName = registerVM.LastName,
-                Phone = registerVM.Phone,
-                BirthDate = registerVM.BirthDate,
-                Salary = registerVM.Salary,
-                Email = registerVM.Email,
-                Gender = (Models.Gender)registerVM.Gender
-            };
-            context.Employees.Add(employee);
-            context.SaveChanges();
-            var ac = new Account
+                return 2;
+            }
+            else if (checkEmail != null)
             {
-                NIK = employee.NIK,
-                Password = registerVM.Password
-            };
-            context.Accounts.Add(ac);
-            context.SaveChanges();
-            var ed = new Education
+                return 3;
+            }
+            else
             {
-                Degree = registerVM.Degree,
-                GPA = registerVM.GPA,
-                UniversityID = registerVM.UniversityID
-            };
-            context.Educations.Add(ed);
-            context.SaveChanges();
-            var pr = new Profiling
-            {
-                NIK = employee.NIK,
-                EducationId = ed.EducationID
-            };
-            context.Profilings.Add(pr);
+                var employee = new Employee
+                {
+                    NIK = formattedNIK,
+                    FirstName = registerVM.FirstName,
+                    LastName = registerVM.LastName,
+                    Phone = registerVM.Phone,
+                    BirthDate = registerVM.BirthDate,
+                    Salary = registerVM.Salary,
+                    Email = registerVM.Email,
+                    Gender = (Models.Gender)registerVM.Gender
+                };
+                context.Employees.Add(employee);
+                context.SaveChanges();
+                var ac = new Account
+                {
+                    NIK = employee.NIK,
+                    Password = registerVM.Password
+                };
+                context.Accounts.Add(ac);
+                context.SaveChanges();
+                var ed = new Education
+                {
+                    Degree = registerVM.Degree,
+                    GPA = registerVM.GPA,
+                    UniversityID = registerVM.UniversityID
+                };
+                context.Educations.Add(ed);
+                context.SaveChanges();
+                var pr = new Profiling
+                {
+                    NIK = employee.NIK,
+                    EducationId = ed.EducationID
+                };
+                context.Profilings.Add(pr);
 
-            context.SaveChanges();
-            return 1;
+                context.SaveChanges();
+                return 1;
+            }
+           
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using MCC61_API_Project.Context;
 using MCC61_API_Project.Models;
@@ -30,11 +31,17 @@ namespace MCC61_API_Project.Controllers
             try
             {
                 var register = employeeRepository.Register(registerVM);
-                if (register == 1)
+                switch (register)
                 {
-                    return Ok(register);
+                    case 1:
+                        return Ok(new { status = HttpStatusCode.OK, result = register, message = "Register Success" });
+                    case 2:
+                        return Ok(new { status = HttpStatusCode.Conflict, result = register, message = "Register Failed, Phone Already Used" });
+                    case 3:
+                        return Ok(new { status = HttpStatusCode.Conflict, result = register, message = "Register Failed, Email Already Used" });
+                    default:
+                        return Ok(new { status = HttpStatusCode.BadRequest, result = register, message = "Register Failed" });
                 }
-                return Ok(new { message = "Failed" });
             }
             catch(Exception e)
             {

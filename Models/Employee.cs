@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MCC61_API_Project.Models
@@ -38,13 +39,15 @@ namespace MCC61_API_Project.Models
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
 
-        //[Required(ErrorMessage = "Gender is Required")]
-        //[Range(0, 1, ErrorMessage = "Must be 0 for Male or 1 for Female")]
+        [Required(ErrorMessage = "Gender is Required")]
+        [Range(0, 1, ErrorMessage = "Must be 0 for Male or 1 for Female")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public Gender Gender { get; set; }
 
 
         //untuk relasi ke account
-        public Account Account { get; set; }
+        [JsonIgnore]
+        public virtual Account Account { get; set; }
     }
 
     public enum Gender
