@@ -92,7 +92,7 @@ namespace MCC61_API_Project.Repository.Data
                           Email = e.Email,
                           BirthDate = e.BirthDate,
                           Salary = e.Salary,
-                          Gender = e.Gender,
+                          Gender = RegisterVM.GetGender((int)e.Gender),
                           Education = new
                           {
                               GPA = ed.GPA,
@@ -107,6 +107,7 @@ namespace MCC61_API_Project.Repository.Data
             return grd;
 
         }
+
 
         public class Hashing
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MCC61_API_Project.ViewModels
@@ -16,12 +17,28 @@ namespace MCC61_API_Project.ViewModels
 
         public int Salary { get; set; }
         public string Email { get; set; }
+
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public Gender Gender { get; set; }
         public string Password { get; set; }
         public string Degree { get; set; }
         public float GPA { get; set; }
         public int EducationID { get; set; }
         public int UniversityID { get; set; }
+
+        public static string GetGender(int gender)
+        {
+            switch (gender)
+            {
+                case (int)Gender.Male:
+                    return "Male";
+                case (int)Gender.Female:
+                    return "Female";
+                default:
+                    return "Invalid Data For Gender";
+            }
+        }
 
     }
 
@@ -30,4 +47,5 @@ namespace MCC61_API_Project.ViewModels
         Male,
         Female
     }
+
 }
