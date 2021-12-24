@@ -38,6 +38,11 @@ namespace MCC61_API_Project
             services.AddScoped<ProfilingRepository>();
             services.AddDbContext<MyContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("API"))); //untuk manggil apsettings.json
+            services.AddDbContext<DbContext>(options => options
+            .UseLazyLoadingProxies()
+            .UseSqlServer(Configuration
+            .GetConnectionString("Exercises0Context"))); 
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

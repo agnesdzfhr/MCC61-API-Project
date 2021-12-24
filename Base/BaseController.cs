@@ -48,10 +48,10 @@ namespace MCC61_API_Project.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{key}")]
-        public virtual ActionResult<Entity> Delete(Key key)
+        [HttpDelete]
+        public virtual ActionResult<Entity> Delete(Entity entity)
         {
-            var result = repository.Delete(key);
+            var result = repository.Delete(entity);
             return Ok(result);
         }
     }

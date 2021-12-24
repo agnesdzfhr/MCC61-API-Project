@@ -21,11 +21,10 @@ namespace MCC61_API_Project.Repository
             entities = myContext.Set<Entity>();
         }
 
-        public virtual int Delete(Key key)
+        public virtual int Delete(Entity entity)
         {
-            var entity = entities.Find(key);
             if (entity == null)
-                throw new ArgumentException("enity");
+                throw new ArgumentException("entity");
             entities.Remove(entity);
             var result = myContext.SaveChanges();
             return result;
@@ -44,7 +43,7 @@ namespace MCC61_API_Project.Repository
         public virtual int Insert(Entity entity)
         {
             if (entity == null)
-                throw new ArgumentException("enity");
+                throw new ArgumentException("entity");
             entities.Add(entity);
             var result = myContext.SaveChanges();
             return result;
@@ -53,7 +52,7 @@ namespace MCC61_API_Project.Repository
         public virtual int Update(Entity entity) 
         {
             if (entity == null)
-                throw new ArgumentException("enity");
+                throw new ArgumentException("entity");
             entities.Add(entity);
             var result = myContext.SaveChanges();
             return result;

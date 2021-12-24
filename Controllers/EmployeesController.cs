@@ -24,6 +24,26 @@ namespace MCC61_API_Project.Controllers
             this.myContext = myContext;
         }
 
+        [HttpGet]
+        [Route("GetRegisterData")]
+        public ActionResult GetRegisterData()
+        {
+            try
+            {
+                var getRegisterData = employeeRepository.GetRegisteredData();
+                if (getRegisterData != null)
+                {
+                    return Ok(new { status = HttpStatusCode.OK, data = getRegisterData, message = "Data Found" });
+                }
+                return Ok(new { status = HttpStatusCode.BadRequest, message = "Data Not Found" });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         [HttpPost]
         [Route("Register")]
         public ActionResult Register(RegisterVM registerVM)
@@ -43,7 +63,7 @@ namespace MCC61_API_Project.Controllers
                         return Ok(new { status = HttpStatusCode.BadRequest, result = register, message = "Register Failed" });
                 }
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 throw;
             }

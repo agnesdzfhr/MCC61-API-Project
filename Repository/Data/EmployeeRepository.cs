@@ -47,7 +47,7 @@ namespace MCC61_API_Project.Repository.Data
                 var ac = new Account
                 {
                     NIK = employee.NIK,
-                    Password = registerVM.Password
+                    Password = Hashing.HashPassword(registerVM.Password)
                 };
                 context.Accounts.Add(ac);
                 context.SaveChanges();
@@ -69,7 +69,60 @@ namespace MCC61_API_Project.Repository.Data
                 context.SaveChanges();
                 return 1;
             }
-           
+
         }
+
+        public IEnumerable<Object> GetRegisteredData()
+        {
+
+
+            var grd = from e in context.Employees
+                      join ac in context.Accounts
+                         on e.NIK equals ac.NIK
+                      join pr in context.Profilings
+                         on ac.NIK equals pr.NIK
+                      join ed in context.Educations
+                        on pr.EducationId equals ed.EducationID
+                      join u in context.Universities
+                         on ed.UniversityID equals u.UniversityID
+                      select new
+                      {
+                          FullName = e.FirstName + e.LastName,
+                          PhoneNumber = e.Phone,
+                          Email = e.Email,
+                          BirthDate = e.BirthDate,
+                          Salary = e.Salary,
+                          Gender = e.Gender,
+                          Education = new
+                          {
+                              GPA = ed.GPA,
+                              Degree = ed.Degree,
+                              University = new
+                              {
+                                  UniversityName = u.Name
+                              }
+                          },
+
+                      };
+            return grd;
+
+        }
+
+        public class Hashing
+        {
+            private static string GetRandomSalt()
+            {
+                return BCrypt.Net.BCrypt.GenerateSalt(12);
+            }
+            public static string HashPassword(string Password)
+            {
+                return BCrypt.Net.BCrypt.HashPassword(Password, GetRandomSalt());
+            }
+            public static bool ValidatePassword(string Password, string correctHash)
+            {
+                return BCrypt.Net.BCrypt.Verify(Password, correctHash);
+            }
+        }
+
     }
 }
