@@ -27,16 +27,16 @@ namespace MCC61_API_Project.Repository.Data
                 bool verifiedPass = Hashing.ValidatePassword(loginVM.Password, findNIK.Password);
                 if(verifiedPass == true)
                 {
-                    return 1; //login success
+                    return 1; //Login Success
                 }
                 else
                 {
-                    return 2; //wrong password
+                    return 2; //Wrong Password
                 }
             }
             else
             {
-                return 3; //wrong email
+                return 3; //Email Not Found
             }
         }
     }

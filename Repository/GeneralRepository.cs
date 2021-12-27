@@ -53,7 +53,7 @@ namespace MCC61_API_Project.Repository
         {
             if (entity == null)
                 throw new ArgumentException("entity");
-            entities.Add(entity);
+            myContext.Entry(entity).State = EntityState.Modified;
             var result = myContext.SaveChanges();
             return result;
         }

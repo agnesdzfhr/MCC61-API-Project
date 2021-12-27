@@ -44,8 +44,15 @@ namespace MCC61_API_Project.Controllers
         [HttpPut]
         public virtual ActionResult<Entity> Update(Entity entity)
         {
-            var result = repository.Update(entity);
-            return Ok(result);
+            try
+            {
+                var result = repository.Update(entity);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpDelete]
