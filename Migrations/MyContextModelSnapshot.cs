@@ -24,18 +24,9 @@ namespace MCC61_API_Project.Migrations
                     b.Property<string>("NIK")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("ExpiredDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("OTP")
-                        .HasColumnType("int");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("isUsed")
-                        .HasColumnType("bit");
 
                     b.HasKey("NIK");
 

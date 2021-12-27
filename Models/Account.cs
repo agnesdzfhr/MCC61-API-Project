@@ -20,7 +20,8 @@ namespace MCC61_API_Project.Models
         public string Password { get; set; }
         public int? OTP { get; set; }
         [Display(Name = "Date")]
-        public DateTime? ExpiredDate { get; set; } = DateTime.Now.AddMinutes(5);
+        public DateTime? ExpiredDate { get; set; }
+        //public DateTime? ExpiredDate { get; set; } = DateTime.Now.AddMinutes(5);
         public bool? isUsed { get; set; }
 
         // untuk relasi ke employee

@@ -19,13 +19,13 @@ namespace MCC61_API_Project.Repository.Data
 
         public int Login(LoginVM loginVM)
         {
-            var findEmail = context.Employees.FirstOrDefault(e => e.Email == loginVM.Email);
+            Employee findEmail = NewMethod(loginVM);
 
             if (findEmail != null)
             {
                 var findNIK = context.Accounts.FirstOrDefault(a => a.NIK == findEmail.NIK);
                 bool verifiedPass = Hashing.ValidatePassword(loginVM.Password, findNIK.Password);
-                if(verifiedPass == true)
+                if (verifiedPass == true)
                 {
                     return 1; //Login Success
                 }
@@ -38,6 +38,16 @@ namespace MCC61_API_Project.Repository.Data
             {
                 return 3; //Email Not Found
             }
+        }
+
+        private Employee NewMethod(LoginVM loginVM)
+        {
+            return context.Employees.FirstOrDefault(e => e.Email == loginVM.Email);
+        }
+
+        public int ForgotPassword(ForgotPasswordVM forgotPasswordVM)
+        {
+            var findEmail = context.Employees
         }
     }
 }

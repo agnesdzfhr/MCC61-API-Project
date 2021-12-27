@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MCC61_API_Project.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211227114944_addAtributAccount")]
-    partial class addAtributAccount
+    [Migration("20211227124829_fixError")]
+    partial class fixError
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,18 +26,9 @@ namespace MCC61_API_Project.Migrations
                     b.Property<string>("NIK")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("ExpiredDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("OTP")
-                        .HasColumnType("int");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("isUsed")
-                        .HasColumnType("bit");
 
                     b.HasKey("NIK");
 

@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MCC61_API_Project.Migrations
 {
-    public partial class addAtributAccount : Migration
+    public partial class fixError : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,24 +21,6 @@ namespace MCC61_API_Project.Migrations
                 oldType: "nvarchar(max)",
                 oldNullable: true);
 
-            migrationBuilder.AddColumn<DateTime>(
-                name: "ExpiredDate",
-                table: "tb_tr_account",
-                type: "datetime2",
-                nullable: true);
-
-            migrationBuilder.AddColumn<int>(
-                name: "OTP",
-                table: "tb_tr_account",
-                type: "int",
-                nullable: true);
-
-            migrationBuilder.AddColumn<bool>(
-                name: "isUsed",
-                table: "tb_tr_account",
-                type: "bit",
-                nullable: true);
-
             migrationBuilder.AlterColumn<string>(
                 name: "Degree",
                 table: "tb_m_education",
@@ -53,18 +34,6 @@ namespace MCC61_API_Project.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "ExpiredDate",
-                table: "tb_tr_account");
-
-            migrationBuilder.DropColumn(
-                name: "OTP",
-                table: "tb_tr_account");
-
-            migrationBuilder.DropColumn(
-                name: "isUsed",
-                table: "tb_tr_account");
-
             migrationBuilder.RenameColumn(
                 name: "Password",
                 table: "tb_tr_account",
