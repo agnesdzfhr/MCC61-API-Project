@@ -24,6 +24,7 @@ namespace MCC61_API_Project.Controllers
             this.context = myContext;
         }
 
+
         [HttpPost]
         [Route("Login")]
         public ActionResult Login(LoginVM loginVM)
@@ -44,6 +45,30 @@ namespace MCC61_API_Project.Controllers
                         return Ok(new { status = HttpStatusCode.BadRequest, login = login, message = "Login Failed" });
                 }
 
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [Route("ForgotPassword")]
+        public ActionResult ForgotPassword(ForgotPasswordVM forgotPasswordVM)
+        {
+            try
+            {
+                var forgotPassword = accountRepository.ForgotPassword(forgotPasswordVM);
+                switch (forgotPassword)
+                {
+                    case 1:
+                        return Ok(new { status = HttpStatusCode.OK, result = forgotPassword, message = "Check your email for the OTP" });
+                    case 2: 
+                        return Ok(new { status = HttpStatusCode.NotFound, result = forgotPassword, message = "Your email was not found in the database" });
+                    default:
+                        return Ok(new { status = HttpStatusCode.BadRequest, result = forgotPassword, message = "Failed to send OTP to your email" });
+
+                }
             }
             catch (Exception)
             {
