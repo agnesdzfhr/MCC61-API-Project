@@ -39,5 +39,10 @@ namespace MCC61_API_Project.Context
                 .WithOne(p => p.Account)
                 .HasForeignKey<Profiling>(p => p.NIK);
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
     }
 }

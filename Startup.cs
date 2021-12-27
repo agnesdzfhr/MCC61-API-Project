@@ -38,10 +38,10 @@ namespace MCC61_API_Project
             services.AddScoped<ProfilingRepository>();
             services.AddDbContext<MyContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("API"))); //untuk manggil apsettings.json
-            services.AddDbContext<DbContext>(options => options
-            .UseLazyLoadingProxies()
-            .UseSqlServer(Configuration
-            .GetConnectionString("Exercises0Context"))); 
+            //services.AddDbContext<DbContext>(options => options
+            //.UseLazyLoadingProxies()
+            //.UseSqlServer(Configuration
+            //.GetConnectionString("API"))); 
            
         }
 
