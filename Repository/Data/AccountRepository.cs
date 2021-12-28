@@ -46,22 +46,26 @@ namespace MCC61_API_Project.Repository.Data
 
         public int ForgotPassword(ForgotPasswordVM forgotPasswordVM)
         {
-            var findEmail = context.Employees.AsNoTracking().FirstOrDefault(e => e.Email == forgotPasswordVM.Email);
-            if (findEmail == null)
+            var checkEmail = context.Employees.AsNoTracking().FirstOrDefault(e => e.Email == forgotPasswordVM.Email);
+            if (checkEmail == null)
             {
                 return 2; //Email Not Found
             }
             else
             {
-                var findAccount = context.Accounts.Find(findEmail.NIK);
+                var findAccount = context.Accounts.Find(checkEmail.NIK);
                 context.Entry(findAccount).State = EntityState.Detached;
                 int otp = GenerateOTP();
+                DateTime expiredTime = DateTime.Now.AddMinutes(5);
                 string to = forgotPasswordVM.Email;
                 string from = "mccreg61net@gmail.com";
                 MailMessage message = new MailMessage(from, to);
 
                 message.Subject = "Your OTP to Change Password";
-                message.Body = $"!Use this otp to change password! \n \n Your OTP: {otp} \n \n Valid for 5 Minutes since you received this email";
+                message.Body = $"<h2>Use this otp to change password!</h2> \n \n " +
+                    $"<div>Your OTP: {otp}</div>\n" +
+                    $"<b>\nExpired: {expiredTime} </b>";
+                message.IsBodyHtml = true;
 
                 SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
                 {
@@ -77,7 +81,7 @@ namespace MCC61_API_Project.Repository.Data
                         NIK = findAccount.NIK,
                         Password = findAccount.Password,
                         OTP = otp,
-                        ExpiredDate = DateTime.Now.AddMinutes(5),
+                        ExpiredDate = expiredTime,
                         isUsed = false
                     };
                     context.Entry(account).State = EntityState.Modified;
@@ -86,6 +90,62 @@ namespace MCC61_API_Project.Repository.Data
                 }catch(SmtpException ex)
                 {
                     throw new SmtpException(ex.Message);
+                }
+
+            }
+        }
+
+        public int ChangePassword(ChangePasswordVM changePasswordVM)
+        {
+            var checkEmail = context.Employees.AsNoTracking().FirstOrDefault(e => e.Email == changePasswordVM.Email);
+            if (checkEmail == null)
+            {
+                return 2; //Email Not Found
+            }
+            else
+            {
+                var findAccount = context.Accounts.FirstOrDefault(a => a.NIK == checkEmail.NIK);
+                context.Entry(findAccount).State = EntityState.Detached;
+                DateTime nowTime = DateTime.Now;
+                if (findAccount.OTP != changePasswordVM.OTP)
+                {
+                    return 4; //Wrong OTP
+                }
+                else
+                { 
+                    if(findAccount.isUsed == true)
+                    {
+                        return 3; //OTP Has Used
+                    }
+                    else
+                    {
+                        try
+                        {
+                            if (findAccount.ExpiredDate <= nowTime)
+                            {
+                                return 0; //OTP Expired
+                            }
+                            else
+                            {
+                                Account account = new Account()
+                                {
+                                    NIK = findAccount.NIK,
+                                    Password = Hashing.HashPassword(changePasswordVM.NewPassword),
+                                    OTP = changePasswordVM.OTP,
+                                    ExpiredDate = null,
+                                    isUsed = true
+                                };
+                                context.Entry(account).State = EntityState.Modified;
+                                context.SaveChanges();
+                                return 1; //Password Changed
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception(e.Message);
+                        }
+                    }
+
                 }
 
             }

@@ -87,7 +87,7 @@ namespace MCC61_API_Project.Repository.Data
                          on ed.UniversityID equals u.UniversityID
                       select new
                       {
-                          FullName = e.FirstName + e.LastName,
+                          FullName = $"{e.FirstName} {e.LastName}",
                           PhoneNumber = e.Phone,
                           Email = e.Email,
                           BirthDate = e.BirthDate,

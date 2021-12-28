@@ -75,5 +75,34 @@ namespace MCC61_API_Project.Controllers
                 throw;
             }
         }
+
+        [HttpPut]
+        [Route("ChangePassword")]
+        public ActionResult ChangePassword(ChangePasswordVM changePasswordVM)
+        {
+            try
+            {
+                var changePassword = accountRepository.ChangePassword(changePasswordVM);
+                switch (changePassword)
+                {
+                    case 0:
+                        return Ok(new { status = HttpStatusCode.NotAcceptable, result = changePassword, message = "OTP Expired" });
+                    case 1:
+                        return Ok(new { status = HttpStatusCode.OK, result = changePassword, message = "Your Password Changed" });
+                    case 2:
+                        return Ok(new { status = HttpStatusCode.NotFound, result = changePassword, message = "Your email was not found in the database" });
+                    case 3:
+                        return Ok(new { status = HttpStatusCode.NotAcceptable, result = changePassword, message = "OTP has used" });
+                    default:
+                        return Ok(new { status = HttpStatusCode.BadRequest, result = changePassword, message = "Wrong OTP" });
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
