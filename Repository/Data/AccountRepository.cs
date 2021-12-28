@@ -55,27 +55,12 @@ namespace MCC61_API_Project.Repository.Data
             {
                 var findAccount = context.Accounts.Find(checkEmail.NIK);
                 context.Entry(findAccount).State = EntityState.Detached;
+                string name = $"{checkEmail.FirstName} {checkEmail.LastName}";
                 int otp = GenerateOTP();
                 DateTime expiredTime = DateTime.Now.AddMinutes(5);
-                string to = forgotPasswordVM.Email;
-                string from = "mccreg61net@gmail.com";
-                MailMessage message = new MailMessage(from, to);
-
-                message.Subject = "Your OTP to Change Password";
-                message.Body = $"<h2>Use this otp to change password!</h2> \n \n " +
-                    $"<div>Your OTP: {otp}</div>\n" +
-                    $"<b>\nExpired: {expiredTime} </b>";
-                message.IsBodyHtml = true;
-
-                SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
-                {
-                    Credentials = new NetworkCredential(from, "61mccregnet"),
-                    EnableSsl = true
-                };
-
                 try
                 {
-                    client.Send(message);
+                    SendEmail(forgotPasswordVM, name, otp, expiredTime);
                     Account account = new Account()
                     {
                         NIK = findAccount.NIK,
@@ -94,6 +79,8 @@ namespace MCC61_API_Project.Repository.Data
 
             }
         }
+
+
 
         public int ChangePassword(ChangePasswordVM changePasswordVM)
         {
@@ -148,6 +135,34 @@ namespace MCC61_API_Project.Repository.Data
 
                 }
 
+            }
+        }
+
+        public static void SendEmail(ForgotPasswordVM forgotPasswordVM,string name, int otp, DateTime expiredTime)
+        {
+            string to = forgotPasswordVM.Email;
+            string from = "mccreg61net@gmail.com";
+            MailMessage message = new MailMessage(from, to);
+
+            message.Subject = $"Hi, {name}! Here's Your OTP Number";
+            message.Body = $"<h2>You have requested password change. If it's not you, ignore this email!</h2>" +
+                $"<p>Use this OTP for change your password: {otp}</p> \n" +
+                $"<p>Expired: {expiredTime} \n</p>";
+            message.IsBodyHtml = true;
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new NetworkCredential(from, "61mccregnet"),
+                EnableSsl = true
+            };
+            try
+            {
+                client.Send(message);
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 

@@ -52,7 +52,7 @@ namespace MCC61_API_Project.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("ForgotPassword")]
         public ActionResult ForgotPassword(ForgotPasswordVM forgotPasswordVM)
         {
@@ -86,13 +86,13 @@ namespace MCC61_API_Project.Controllers
                 switch (changePassword)
                 {
                     case 0:
-                        return Ok(new { status = HttpStatusCode.NotAcceptable, result = changePassword, message = "OTP Expired" });
+                        return Ok(new { status = HttpStatusCode.NotAcceptable, result = changePassword, message = "OTP Expired, Please send request forgot password again!" });
                     case 1:
-                        return Ok(new { status = HttpStatusCode.OK, result = changePassword, message = "Your Password Changed" });
+                        return Ok(new { status = HttpStatusCode.OK, result = changePassword, message = "Your Password Was Changed" });
                     case 2:
                         return Ok(new { status = HttpStatusCode.NotFound, result = changePassword, message = "Your email was not found in the database" });
                     case 3:
-                        return Ok(new { status = HttpStatusCode.NotAcceptable, result = changePassword, message = "OTP has used" });
+                        return Ok(new { status = HttpStatusCode.NotAcceptable, result = changePassword, message = "OTP has been used" });
                     default:
                         return Ok(new { status = HttpStatusCode.BadRequest, result = changePassword, message = "Wrong OTP" });
 
