@@ -57,6 +57,8 @@ namespace MCC61_API_Project
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
