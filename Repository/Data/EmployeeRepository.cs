@@ -51,6 +51,13 @@ namespace MCC61_API_Project.Repository.Data
                 };
                 context.Accounts.Add(ac);
                 context.SaveChanges();
+                var ar = new AccountRole
+                {
+                    NIK = ac.NIK,
+                    RoleId = 3
+                };
+                context.AccountRoles.Add(ar);
+                context.SaveChanges();
                 var ed = new Education
                 {
                     Degree = registerVM.Degree,
@@ -74,8 +81,6 @@ namespace MCC61_API_Project.Repository.Data
 
         public IEnumerable<Object> GetRegisteredData()
         {
-
-
             var grd = from e in context.Employees
                       join ac in context.Accounts
                          on e.NIK equals ac.NIK
