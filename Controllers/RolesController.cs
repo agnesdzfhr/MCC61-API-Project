@@ -33,9 +33,10 @@ namespace MCC61_API_Project.Controllers
                 {
                     case 1:
                         return Ok(new { status = HttpStatusCode.OK, result = result, message = $"Account with NIK {accountRole.NIK} assigned as manager" });
-                    default:
+                    case 2:
                         return Ok(new { status = HttpStatusCode.NotFound, result = result, message = $"Account with NIK {accountRole.NIK} not found in database" });
-
+                    default:
+                        return Ok(new { status = HttpStatusCode.Conflict, result = result, message = $"Employee with NIK {accountRole.NIK} already being manager" });
                 }
             }
             catch (Exception)
