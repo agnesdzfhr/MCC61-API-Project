@@ -18,6 +18,8 @@ namespace MCC61_API_Project.Context
         public DbSet<University> Universities { get; set; }
         public DbSet<Education> Educations { get; set; }
         public DbSet<Profiling> Profilings { get; set; }
+        public DbSet<AccountRole> AccountRoles { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
