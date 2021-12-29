@@ -38,6 +38,16 @@ namespace MCC61_API_Project.Context
                 .HasOne(a => a.Profiling)
                 .WithOne(p => p.Account)
                 .HasForeignKey<Profiling>(p => p.NIK);
+
+            modelBuilder.Entity<AccountRole>()
+                .HasOne(ar => ar.Account)
+                .WithMany(a => a.AccountRoles)
+                .HasForeignKey(ar => ar.NIK);
+
+            modelBuilder.Entity<AccountRole>()
+                .HasOne(ar => ar.Role)
+                .WithMany(r => r.AccountRoles)
+                .HasForeignKey(ar => ar.RoleId);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

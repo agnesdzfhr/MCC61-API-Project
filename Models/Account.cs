@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MCC61_API_Project.Models
 {
-    [Table("tb_tr_account")]
+    [Table("tb_m_account")]
     public class Account
     {
         [Key]
@@ -31,12 +31,8 @@ namespace MCC61_API_Project.Models
         [JsonIgnore]
         public virtual Profiling Profiling { get; set; }
 
-        /*TODO
-         * Bikin VM buat request password dan change password
-         * Bikin request buat forgot password
-         * di forgot password dilakukan generate otp, bikin expiredtoken sm isusednya
-         * trus kirim otpnya ke email
-         * trus bikin request buat change password
-         */
+        [JsonIgnore]
+        public virtual ICollection<AccountRole> AccountRoles { get; set; }
+
     }
 }
