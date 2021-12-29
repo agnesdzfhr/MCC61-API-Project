@@ -38,6 +38,8 @@ namespace MCC61_API_Project
             services.AddScoped<UniversityRepository>();
             services.AddScoped<EducationRepository>();
             services.AddScoped<AccountRepository>();
+            services.AddScoped<AccountRoleRepository>();
+            services.AddScoped<RoleRepository>();
             services.AddScoped<ProfilingRepository>();
             services.AddDbContext<MyContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("API"))); //untuk manggil apsettings.json
