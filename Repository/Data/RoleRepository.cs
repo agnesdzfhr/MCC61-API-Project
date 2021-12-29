@@ -24,6 +24,14 @@ namespace MCC61_API_Project.Repository.Data
             }
             else
             {
+                var findAR = context.AccountRoles.ToList().Where(ar => ar.NIK == accountRole.NIK);
+                foreach (var a in findAR)
+                {
+                    if(a.RoleId == 2)
+                    {
+                        return 3; // Employee has been manager
+                    }
+                }
                 AccountRole ar = new AccountRole()
                 {
                     NIK = findEmployee.NIK,
