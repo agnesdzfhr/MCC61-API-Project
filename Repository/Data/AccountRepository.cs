@@ -184,5 +184,14 @@ namespace MCC61_API_Project.Repository.Data
                 throw new Exception(e.Message);
             }
         }
+
+        public IEnumerable<object> GetRoles(string email)
+        {
+            var findEmail = context.Employees.Where(e => e.Email == email).FirstOrDefault();
+            var AccountRole = context.AccountRoles.Where(ar => ar.NIK == findEmail.NIK).Select(ar => ar.Role.RoleName).ToList();
+            return AccountRole;
+
+        }
+
     }
 }
