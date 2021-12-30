@@ -66,6 +66,10 @@ namespace MCC61_API_Project
                     ClockSkew = TimeSpan.Zero
                 };
             });
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
 
         }
 
@@ -76,6 +80,8 @@ namespace MCC61_API_Project
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseHttpsRedirection();
 
@@ -89,6 +95,7 @@ namespace MCC61_API_Project
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
