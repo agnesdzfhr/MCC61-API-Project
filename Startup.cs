@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using Microsoft.OpenApi.Models;
 
 namespace MCC61_API_Project
 {
@@ -43,6 +44,11 @@ namespace MCC61_API_Project
             services.AddScoped<ProfilingRepository>();
             services.AddDbContext<MyContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("API"))); //untuk manggil apsettings.json
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+            });
             //services.AddDbContext<DbContext>(options => options
             //.UseLazyLoadingProxies()
             //.UseSqlServer(Configuration
@@ -70,8 +76,9 @@ namespace MCC61_API_Project
             {
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
             });
-
         }
+
+    
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -80,6 +87,13 @@ namespace MCC61_API_Project
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseCors(options => options.AllowAnyOrigin());
 

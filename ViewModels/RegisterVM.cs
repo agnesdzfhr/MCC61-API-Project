@@ -19,8 +19,7 @@ namespace MCC61_API_Project.ViewModels
         public string Email { get; set; }
 
 
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public Gender Gender { get; set; }
+        public Models.Gender Gender { get; set; }
         public string Password { get; set; }
         public string Degree { get; set; }
         public float GPA { get; set; }
@@ -31,21 +30,15 @@ namespace MCC61_API_Project.ViewModels
         {
             switch (gender)
             {
-                case (int)Gender.Male:
+                case (int)Models.Gender.Male:
                     return "Male";
-                case (int)Gender.Female:
+                case (int)Models.Gender.Female:
                     return "Female";
                 default:
                     return "Invalid Data For Gender";
             }
         }
 
-    }
-
-    public enum Gender
-    {
-        Male,
-        Female
     }
 
 }
