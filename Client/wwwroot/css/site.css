@@ -70,44 +70,29 @@ body {*/
   line-height: 60px;*/ /* Vertically center the text there */
 /*}*/
 
-
-.display .inline, .display .inline-block, .display .block{
-    margin:0;
-    padding:0;
-    display:inline-block;
+*{
+    /*border: 2px solid #ddd;*/
+    padding: 5px;
+    margin: 5px;
 }
 
-.inline div{
+body{
+    max-width: 900px;
+    margin: auto;
+}
+
+h1#judul{
+    color: navy;
+    font-size: 40px;
+}
+
+.kbutton:hover{
+    background-color: cornflowerblue;
+    color: white;
     display: inline;
 }
 
-.block div{
-    display: block;
-}
-
-.inline-block div{
-    display: inline-block;
-}
-
-.satu {
-    background-color: aqua;
-    width: 100px;
-    height: 100px;
-}
-
-.dua {
-    background-color: yellow;
-    width: 100px;
-    height: 100px;
-}
-
-.tiga {
-    background-color: lightcoral;
-    width: 100px;
-    height: 100px;
-}
-
-.absolute{
-    position:absolute;
-    margin-left:50px;
+.active{
+    background-color: cornflowerblue;
+    color: white;
 }
