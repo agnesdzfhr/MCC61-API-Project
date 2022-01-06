@@ -70,15 +70,16 @@ body {*/
   line-height: 60px;*/ /* Vertically center the text there */
 /*}*/
 
-*{
+/**{*/
     /*border: 2px solid #ddd;*/
-    padding: 5px;
+    /*padding: 5px;
     margin: 5px;
-}
+}*/
 
 body{
     max-width: 900px;
     margin: auto;
+    height: 2000px
 }
 
 h1#judul{
@@ -90,9 +91,43 @@ h1#judul{
     background-color: cornflowerblue;
     color: white;
     display: inline;
+    margin: 5px;
 }
 
 .active{
     background-color: cornflowerblue;
     color: white;
+}
+
+section#b{
+    margin: 0 5px 0 0;
+}
+
+
+#button-ubah{
+    margin: 5px;
+}
+
+img#pokeImage{
+    height:300px;
+    display: block;
+    margin-bottom: auto;
+    margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#thPoke{
+    background-color: skyblue;
+}
+
+#pokemonCard{
+    margin-right: 5px;
+    margin-left: 45px;
+    width:1000px;
+    padding:20px;
+}
+
+.modal-body{
+    background-color:aliceblue;
 }
