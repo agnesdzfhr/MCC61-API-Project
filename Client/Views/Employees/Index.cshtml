@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_EmployeeLayout";
+}
+
+<div class="pembungkus">
+    <h1>List Data</h1>
+    <table id="tPoke" class="table table-hover text-center">
+        <thead id="thPoke" class="font-weight-bold">
+            <tr>
+                <td>No</td>
+                <td>Nama</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody class="tablePoke text-capitalize">
+            <tr>
+                <td>1</td>
+                <td>Halo</td>
+                <td>
+                    <button class="btn btn-primary">Detail</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalPoke" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered col-md-4 modal-xl" role="document">
+        <div id="pokeContent" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title">Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <section id="a" class="row">
+                    <div class="col-4">
+                        <img id="pokeImage" class="bg-transparent" src="https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_640.png" />
+                    </div>
+                    <div id="pokemonCard" class="card shadow col-7">
+                        <div class="row">
+                            <h4 class="pokeName text-capitalize ml-4 font-weight-bold">Pokemon Name</h4>
+                            <div id="pokeType" class="col">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h5 class="ml-4">Abilities: </h5>
+                            <div id="pokeAbl">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center bg-dark text-light">Stats</div>
+                        </div>
+                        <div class="stats mt-2 border">
+                            <div class="col">
+
+                            </div>
+                            <div class="col">
+                                <div class="progress mt-2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
