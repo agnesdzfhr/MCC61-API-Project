@@ -1,126 +1,529 @@
 ﻿
 
 //ajax
-$.ajax({
-    url: "https://pokeapi.co/api/v2/pokemon"
-}).done((result) => {
-    console.log(result.results);
-    var text = "";
-    $.each(result.results, function (key, val) {
-        text += `<tr>
-                    <td>${key+1}</td>
-                    <td>${val.name}</td>
-                    <td>
-                        <button data-toggle="modal" data-target="#modalPoke" class="btn btn-primary" onclick="getDetails('${val.url}')">Detail</button>
-                    </td>
-                </tr>`;
+//$.ajax({
+//    url: "https://localhost:44303/API/Employees/GetRegisterData"
+//}).done((result) => {
+//    console.log(result.results);
+//    var text = "";
+//    $.each(result.results, function (key, val) {
+//        text += `<tr>
+//                    <td>${key+1}</td>
+//                    <td>${val.name}</td>
+//                    <td>
+//                        <button data-toggle="modal" data-target="#modalPoke" class="btn btn-primary" onclick="getDetails('${val.url}')">Detail</button>
+//                    </td>
+//                </tr>`;
+//    });
+//    console.log(text);
+//    $(".tablePoke").html(text);
+
+//const { title } = require("process");
+
+//const { post } = require("jquery");
+
+//}).fail((error) => {
+//    console.log(error);
+//})
+
+
+$(document).ready(function () {
+    $('#tPoke').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                text: '<i class="fa fa-files-o"> Copy</i>',
+                className: 'btn btn-secondary',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fa fa-file-excel-o"> Excel</i>',
+                className: 'btn btn-success',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                }
+            },
+            {
+                extend: 'csvHtml5',
+                text: '<i class="fa fa-file-csv"> CSV</i>',
+                className: 'btn btn-primary',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                text: '<i class="fa fa-file-pdf-o"> PDF</i>',
+                className: 'btn btn-danger',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                }
+            },
+            {
+                extend: 'print',
+                text: '<i class="fa fa-print"> Print</i>',
+                className: 'btn btn-dark',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                }
+            },
+        ],
+        'ajax': {
+            'url': "Employees/GetRegisterData",
+            'dataType': 'json',
+            'dataSrc': 'result'
+        },
+        'scrollX': true,
+        'columns': [
+            {
+                'data': null,
+                'render': (data, type, row, meta) => {
+                    return (meta.row + 1);
+                }
+            },
+            {
+                'data': 'nik',
+            },
+            {
+                'width': '200px',
+                'data': null,
+                'render': (data) => {
+                    return (data.firstName + " " + data.lastName);
+                }
+            },
+            {
+                'width': '150px',
+                'data': 'phone'
+            },
+            {
+                'data': 'email'
+            },
+            {
+                'width': '100px',
+                'data': 'birthDateStr'
+            },
+            {
+                'width': '150px',
+                'data': null,
+                'render': (data) => {
+                    return ("$" + data.salary)
+                }
+            },
+            {
+                'data': 'gender'
+            },
+            {
+                'data': 'degree'
+            },
+            {
+                'data': 'universityName'
+            },
+            {
+                'data': null,
+                'render': (data) => {
+                    var rName = "";
+                    $.each(data.role, function (key, val) {
+                        if (data.role.length - 1 == key) {
+                            rName += val + ".";
+                        } else {
+                            rName += val + ", ";
+                        }
+                    })
+
+                    return (rName)
+                }
+            },
+            {
+                'data': null,
+                'render': (data, type, row) => {
+                    return `<button data-toggle="modal" data-target="#updateEmployee" type="button" class="btn btn-success fas fa-info" onclick="UpdateEmploye(${row["nik"]})"></button>
+                        <button type = "button" class="btn btn-danger mt-2 fa fa-remove" onclick="DeleteEmployee(${row["nik"]})"></button>`
+                },
+                'bSortable': false
+            }
+        ]
     });
-    console.log(text);
-    $(".tablePoke").html(text);
+});
 
-}).fail((error) => {
-    console.log(error);
-})
+function DeleteEmployee(nik) {
+    console.log(nik);
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '##ff0000',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var myTable = $('#tPoke').DataTable();
+            $.ajax({
+                url: "Employees/DeleteRegisterData/" + nik,
+                type: "DELETE",
+                //contentType: "application/json;charset=utf-8",
+            }).done((result) => {
+                console.log(result);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "Delete Success",
+                    type: 'success'
+                });
+                myTable.ajax.reload();
 
-function getDetails(url) {
-    console.log(url);
-    $.ajax({
-        url: url
-    }).done((result) => {
-        console.log(result.name);
-        var img = result.sprites.other.home.front_default;
-        console.log(result);
-        $("div.modal img#pokeImage").attr("src", img);
-
-        var name = `<h3 class="text-capitalize font-weight-bold">${result.name}</h3>`;
-        $(".pokeName").html(name);
-
-        var detailType = "";
-        $.each(result.types, function (key, val) {
-            console.log(result.types[key].type.name);
-            detailType += typeColor(val.type.name);
-        })
-        $("#pokeType").html(detailType);
-
-        function typeColor(val) {
-
-            if (val == "normal" || val == "flying" || val == "ground" || val == "water" || val == "grass" || val == "psychic" || val == "ice" || val=="fairy") {
-                var color = `<span class="badge badge-pill badge-warning mr-2">${val}</span>`;
-                return color;
-            } else if (val == "fighting" || val == "electric" || val == "poison" || val=="rock" || val=="bug" || val=="steel" || val =="fire" || val=="dragon") {
-                var color = `<span class="badge badge-pill badge-danger mr-2">${val}</span>`;
-                return color;
-            } else if (val=="ghost"||val=="dark" || val=="shadow" || val=="unknown") {
-                var color = `<span class="badge badge-pill badge-dark mr-2">${val}</span>`;
-                return color;
-            }
+            }).fail((error) => {
+                console.log(error);
+                Swal.fire({
+                    icon: 'failed',
+                    title: 'Failed',
+                    text: "Delete Failed",
+                    type: 'failed'
+                });
+            })
         }
+    })
+}
 
-        var pokeAbl = "";
-        $.each(result.abilities, function (key, val) {
-            pokeAbl += `<div class="ml-3" style="display:inline">${val.ability.name}</div>`;
-        })
-        $("#pokeAbl").html(pokeAbl);
 
-        var pokeStats = '';
-        $.each(result.stats, function (key, val) {
-            console.log(val);
-            if (val.base_stat > 75) {
-                pokeStats += `
-                            <div class="col">
-                                <div>${val.stat.name}</div>
-                            </div>
-                            <div class="col">
-                                <div class="progress mt-2">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: ${val.base_stat}%;" aria-valuenow="${val.base_stat}" aria-valuemin="0" aria-valuemax="100">${val.base_stat}%</div>
-                                </div>
-                            </div>`;
 
-            } else if (val.base_stat > 50 && val.base_stat < 76) {
-                pokeStats += `
-                            <div class="col">
-                                <div>${val.stat.name}</div>
-                            </div>
-                            <div class="col">
-                                <div class="progress mt-2">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: ${val.base_stat}%;" aria-valuenow="${val.base_stat}" aria-valuemin="0" aria-valuemax="100">${val.base_stat}%</div>
-                                </div>
-                            </div>`;
-            } else if (val.base_stat > 25 && val.base_stat < 51) {
-                pokeStats += `
-                            <div class="col">
-                                <div>${val.stat.name}</div>
-                            </div>
-                            <div class="col">
-                                <div class="progress mt-2">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: ${val.base_stat}%;" aria-valuenow="${val.base_stat}" aria-valuemin="0" aria-valuemax="100">${val.base_stat}%</div>
-                                </div>
-                            </div>`;
-            } else {
-                pokeStats += `
-                            <div class="col">
-                                <div>${val.stat.name}</div>
-                            </div>
-                            <div class="col">
-                                <div class="progress mt-2">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: ${val.base_stat}%;" aria-valuenow="${val.base_stat}" aria-valuemin="0" aria-valuemax="100">${val.base_stat}%</div>
-                                </div>
-                            </div>`;
-            }
 
+function UpdateEmploye(nik) { //show detail
+    $.ajax({
+        url: "https://localhost:44303/Api/Universities"
+    }).done((result) => {
+        var option = "<option>Select:</option>";
+        $.each(result, function (key, val) {
+            option += `<option value="${val.universityID}">${val.name}</option>`
         });
+        $("#universityUpdate").html(option);
+    }).fail((error) => {
+        console.log(error)
+    })
+    console.log(nik);
+    $.ajax({
+        url: "Employees/GetRegisterByNIK/" + nik,
+    }).done((result) => {
+        console.log("GPA: " + result.gpa);
+        $('input#nikEmployee').val(`${nik}`);
+        $('input#firstNameUpdate').val(`${result.firstName}`);
+        $('input#lastNameUpdate').val(`${result.lastName}`);
+        $('input#emailUpdate').val(`${result.email}`);
+        $('input#passwordUpdate').val(`${result.password}`);
+        $('input#phoneUpdate').val(`${result.phone}`);
+        $('input#birthDateUpdate').val(`${result.birthDateStr}`);
+        $('input#salaryUpdate').val(`${result.salary}`);
+        $('#genderUpdate').val(`${result.gender}`);
+        $('#universityUpdate').val(`${result.universityID}`);
+        $('#degreeUpdate').val(`${result.degree}`);
+        $('input#gpaUpdate').val(`${result.gpa}`);
 
-        $(".stats").html(pokeStats);
+    }).fail((error) => {
+        console.log(error)
+    })
+}
+
+
+
+function submitData() {
+    var obj = Object();
+    obj.FirstName = $('#firstName').val();
+    obj.LastName = $('#lastName').val();
+    obj.Email = $('#email').val();
+    obj.Password = $('#password').val();
+    obj.Phone = $('#phone').val();
+    obj.BirthDate = $('#birthDate').val();
+    obj.Salary = parseInt($('#salary').val());
+    obj.Gender = parseInt($('#gender').val());
+    obj.UniversityID = parseInt($('#university').val());
+    obj.Degree = $('#degree').val();
+    obj.GPA = parseFloat($('#gpa').val());
+
+    console.log(obj.GPA);
+    //var objJson = JSON.stringify(obj);
+    //console.log(objJson);
+
+    var myTable = $('#tPoke').DataTable();
+
+    $.ajax({
+        url: "Employees/Register",
+        type: "POST",
+        data: obj
+    }).done((result) => {
+        console.log(result)
+        if (result.status == 200) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: result.message,
+                type: 'success'
+            });
+        }
+        else
+        {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: result.message,
+                type: 'error'
+            });
+        }
+        $('.modal#modalRegister').modal("hide");
+        myTable.ajax.reload();
 
     }).fail((error) => {
         console.log(error);
+        Swal.fire({
+            icon: 'failed',
+            title: 'Failed',
+            text: error.message,
+            type: 'failed'
+        });
     })
-
-
-
 }
 
-$(document).ready(function () {
-    $('#tPoke').DataTable();
+function submitUpdate() {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Your data will be change!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '##ff0000',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "Yes, change it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var obj = Object();
+            obj.NIK = $("#nikEmployee").val();
+            obj.FirstName = $('#firstNameUpdate').val();
+            obj.LastName = $('#lastNameUpdate').val();
+            obj.Email = $('#emailUpdate').val();
+            obj.Phone = $('#phoneUpdate').val();
+            obj.BirthDate = $('#birthDateUpdate').val();
+            obj.Salary = parseInt($('#salaryUpdate').val());
+            obj.Gender = parseInt($('#genderUpdate').val());
+            obj.UniversityID = parseInt($('#universityUpdate').val());
+            obj.Degree = $('#degreeUpdate').val();
+            obj.GPA = parseFloat($('#gpaUpdate').val());
+            //var objJson = JSON.stringify(obj);
+            //console.log(objJson);
+
+            var myTable = $('#tPoke').DataTable();
+
+            $.ajax({
+                url: "Employees/UpdateRegister",
+                type: "PUT",
+                //contentType: "application/json;charset=utf-8",
+                data: obj
+            }).done((result) => {
+                console.log(result)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: result.message,
+                    type: 'success'
+                });
+                myTable.ajax.reload();
+                $('.modal#updateEmployee').modal("toggle");
+
+            }).fail((error) => {
+                console.log(error);
+                Swal.fire({
+                    icon: 'failed',
+                    title: 'Failed',
+                    text: error.message,
+                    type: 'failed'
+                });
+            })
+
+        }
+    })
+}
+
+$('#formEmployee').submit(function (e) {
+    e.preventDefault();
+
+    // do ajax now
+    submitData();
+    $('#formEmployee').trigger("reset");
+
+
 });
+
+$('#updateEmployee').submit(function (e) {
+    e.preventDefault();
+
+    // do ajax now
+    submitUpdate();
+    $('#updateEmployee').trigger("reset");
+
+
+});
+
+//chart gender
+$.ajax({
+    url: "https://localhost:44303/API/Employees/GetRegisterData"
+}).done((result) => {
+    var male = result.result.filter((g) => {
+        return g.gender == "Male";
+    });
+    var female = result.result.filter((g) => {
+        return g.gender == "Female";
+    });
+    console.log(result);
+    console.log("male");
+    console.log(male);
+
+    var options = {
+        chart: {
+            type: 'pie'
+        },
+        series: [male.length, female.length],
+        labels: ['Male', 'Female']
+    }
+
+    var chart = new ApexCharts(document.querySelector("#chartGender"), options);
+
+    chart.render();
+})
+
+//tampilan univ
+function FormAdd() {
+    $.ajax({
+        url: "Universities/GetAll"
+    }).done((result) => {
+        var option = "<option>Select:</option>";
+        $.each(result, function (key, val) {
+            option += `<option value="${val.universityID}">${val.name}</option>`
+        });
+        $("#university").html(option);
+
+    }).fail((error) => {
+        console.log(error)
+    })
+}
+
+
+//chart Univ
+$.ajax({
+    url: "Universities/GetAll"
+}).done((result) => {
+    console.log("result")
+    console.log(result);
+    var univName = new Array();
+    $.each(result, function (key, val) {
+
+        //console.log(val.name);
+        univName.push(val.name);
+    });
+    GetChartUniv(univName);
+
+
+}).fail((error) => {
+    console.log("error")
+    console.log(error)
+})
+
+function GetChartUniv(univName) {
+    $.ajax({
+        url: "https://localhost:44303/API/Employees/GetRegisterData"
+    }).done((result) => {
+        var employeeUniv = new Array();
+        $.each(result, function (key, val) {
+            var empUniv = val.universityName;
+            employeeUniv.push(empUniv);
+            var test = univName.filter((u) => {
+                return u == empUniv;
+            });
+
+            console.log(test);
+        });
+        var univCL = new Array();
+        $.each(univName, function (key, val) {
+            var univChart = employeeUniv.filter((u) => {
+                return u == val;
+            });
+            console.log("test")
+            console.log(univChart.length);
+            univCL.push(univChart.length);
+
+        })
+        var options = {
+            chart: {
+                type: 'bar'
+            },
+            theme: {
+                monochrome: {
+                    enabled: true,
+                    color: '#255aee',
+                    shadeTo: 'light',
+                    shadeIntensity: 0.65
+                }
+            },
+            series: [{
+                name: 'Universities',
+                data: univCL
+            }],
+            xaxis: {
+                categories: univName
+            },
+        }
+
+        var chart = new ApexCharts(document.querySelector("#chartUniv"), options);
+
+        chart.render();
+
+    }).fail((error) => {
+        console.log("error");
+        console.log(error);
+    })
+}
+
+function LoginEmployee() {
+    var obj = new Object();
+    obj.Email = $("#emailEmployee").val();
+    obj.Password = $("#passwordEmployee").val();
+    //var objJson = JSON.stringify(obj);
+    //console.log(objJson);
+    $.ajax({
+        url: "https://localhost:44357/Accounts/Login",
+        //url: "Accounts/Login",
+        type: "POST",
+        //contentType: "application/json;charset=utf-8",
+        data: obj
+
+    }).done((result) => {
+        if (result.status == 200) {
+            Swal.fire({
+
+                icon: 'success',
+                title: 'Success',
+                text: result.message,
+                type: 'success'
+            });
+            setTimeout(function () {
+                location.href = "https://localhost:44357/Employees";
+            }, 3000);
+        } else {
+            Swal.fire({
+
+                icon: 'error',
+                title: 'Oops!',
+                text: result.message,
+                type: 'error'
+            });
+        }
+    }).fail((error) => {
+        Swal.fire({
+            icon: 'failed',
+            title: 'Failed',
+            text: error.responseJSON.text,
+            type: 'failed'
+        });
+    })
+}
 

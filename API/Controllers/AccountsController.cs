@@ -48,7 +48,7 @@ namespace MCC61_API_Project.Controllers
 
                         var claims = new List<Claim>
                         {
-                            new Claim("email", loginVM.Email)
+                            new Claim("email", loginVM.Email),
 
                         };
                         foreach (var roleData in getRoles)
@@ -67,13 +67,13 @@ namespace MCC61_API_Project.Controllers
                             );
                         var idToken = new JwtSecurityTokenHandler().WriteToken(token);
                         claims.Add(new Claim("TokenSecurity", idToken.ToString()));
-                        return Ok(new { status = HttpStatusCode.OK, idtoken = idToken, message = "Login Success" });
+                        return Ok(new JWTtokenVM{ status = HttpStatusCode.OK, idtoken = idToken, message = "Login Success" });
                     case 2:
-                        return Ok(new { status = HttpStatusCode.BadRequest, login = login, message = "Wrong Password" });
+                        return Ok(new JWTtokenVM{ status = HttpStatusCode.BadRequest, idtoken = null, message = "Wrong Password" });
                     case 3:
-                        return Ok(new { status = HttpStatusCode.NotFound, login = login, message = "Email Not Found" });
+                        return Ok(new JWTtokenVM{ status = HttpStatusCode.NotFound, idtoken = null, message = "Email Not Found" });
                     default:
-                        return Ok(new { status = HttpStatusCode.BadRequest, login = login, message = "Login Failed" });
+                        return Ok(new JWTtokenVM{ status = HttpStatusCode.BadRequest, idtoken = null, message = "Login Failed" });
                 }
 
             }

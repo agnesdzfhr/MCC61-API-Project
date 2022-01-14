@@ -21,13 +21,25 @@ namespace MCC61_API_Project.Repository
             entities = myContext.Set<Entity>();
         }
 
-        public virtual int Delete(Entity entity)
+        //public virtual int Delete(Entity entity)
+        //{
+        //    if (entity == null)
+        //        throw new ArgumentException("entity");
+        //    entities.Remove(entity);
+        //    var result = myContext.SaveChanges();
+        //    return result;
+        //}
+
+        public int Delete(Key key)
         {
+            var entity = entities.Find(key);
             if (entity == null)
-                throw new ArgumentException("entity");
+            {
+                throw new ArgumentNullException("entity");
+            }
             entities.Remove(entity);
-            var result = myContext.SaveChanges();
-            return result;
+            var respond = myContext.SaveChanges();
+            return respond;
         }
 
         public virtual IEnumerable<Entity> Get()

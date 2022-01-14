@@ -1,75 +1,171 @@
 ﻿
 @{
     ViewData["Title"] = "Index";
-    Layout = "_EmployeeLayout";
+    Layout = "_AdminLayout";
 }
 
 <div class="pembungkus">
-    <h1>List Data</h1>
+    <h1>Employee Data</h1>
+    <button data-toggle="modal" data-target="#modalRegister" class="btn btn-outline-primary fa fa-plus mb-2" onclick="FormAdd()"> Add Data</button>
     <table id="tPoke" class="table table-hover text-center">
         <thead id="thPoke" class="font-weight-bold">
             <tr>
                 <td>No</td>
+                <td>NIK</td>
                 <td>Nama</td>
+                <td class="">Phone Number</td>
+                <td>Email</td>
+                <td class="">Birth Date</td>
+                <td>Salary</td>
+                <td>Gender</td>
+                <td>Degree</td>
+                <td>University</td>
+                <td>Role</td>
                 <td>Action</td>
             </tr>
         </thead>
-        <tbody class="tablePoke text-capitalize">
+        <tbody class="tablePoke">
             <tr>
-                <td>1</td>
-                <td>Halo</td>
-                <td>
-                    <button class="btn btn-primary">Detail</button>
-                </td>
+                <td class="textEmployee"></td>
             </tr>
         </tbody>
     </table>
+
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="modalPoke" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered col-md-4 modal-xl" role="document">
+<!-- Modal Add Employee Data -->
+<div class="modal fade" id="modalRegister" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered col-md-4" role="document">
         <div id="pokeContent" class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="title">Details</h5>
+                <h5 class="modal-title" id="title">Add Employee Data</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <section id="a" class="row">
-                    <div class="col-4">
-                        <img id="pokeImage" class="bg-transparent" src="https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_640.png" />
-                    </div>
-                    <div id="pokemonCard" class="card shadow col-7">
-                        <div class="row">
-                            <h4 class="pokeName text-capitalize ml-4 font-weight-bold">Pokemon Name</h4>
-                            <div id="pokeType" class="col">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <h5 class="ml-4">Abilities: </h5>
-                            <div id="pokeAbl">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col text-center bg-dark text-light">Stats</div>
-                        </div>
-                        <div class="stats mt-2 border">
+            <form id="formEmployee">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <section id="a" class="row">
                             <div class="col">
+                                <label for="firstName">First Name</label>
+                                <input required type="text" id="firstName" class="form-control" pattern="^[A-Za-z]+$" />
+                            </div>
+                            <div class="col mr-1">
+                                <label for="lastName">Last Name</label>
+                                <input required type="text" id="lastName" class="form-control" pattern="^[A-Za-z]+$" />
+                            </div>
+                        </section>
+                        <section id="b" class="row">
+                            <label for="email">Email</label>
+                            <input required type="email" id="email" class="form-control" placeholder="name@example.com" />
+                            <label for="passWord">Password</label>
+                            <input required type="password" id="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" />
+                            <label for="phoneNumber">Phone Number</label>
+                            <input required type="text" id="phone" class="form-control" pattern="^\d+$" />
+                            <label for="birthDate">Birth Date</label>
+                            <input required type="date" id="birthDate" class="form-control" />
+                            <label for="salary">Salary</label>
+                            <input required type="number" id="salary" class="form-control" min="5000" max="10000000" title="value must between 5000-10000000" />
+                            <label for="gender">Gender</label>
+                            <select required id="gender" class="form-control">
+                                <option>Select:</option>
+                                <option value="0">Male</option>
+                                <option value="1">Female</option>
+                            </select>
+                            <label for="university">University</label>
+                            <select required id="university" class="form-control">
+                            </select>
+                            <label for="degree">Degree</label>
+                            <select required id="degree" class="form-control">
+                                <option>Select:</option>
+                                <option>D1</option>
+                                <option>D2</option>
+                                <option>D3</option>
+                                <option>D4</option>
+                                <option>S1</option>
+                                <option>S2</option>
+                                <option>S3</option>
+                            </select>
+                            <label for="gpa">GPA</label>
+                            <input required type="text" id="gpa" class="form-control" pattern="^(?:4(?:\.0)?|[0-3](?:\.[0-99])?|0?\.[1-99])$" title="" />
+                        </section>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="submitData" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-                            </div>
+
+<!-- Modal Update -->
+<div class="modal fade" id="updateEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered col-md-4" role="document">
+        <div id="updateContent" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titleUpdate">Update Employee Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="updateEmployee">
+                <div class="modal-body">
+                    <div id="upEmployee" class="form-group">
+                        <label for="nik">NIK</label>
+                        <input type="text" id="nikEmployee" class="form-control" value="" readonly />
+                        <section id="a" class="row">
                             <div class="col">
-                                <div class="progress mt-2">
-                                </div>
+                                <label for="firstName">First Name</label>
+                                <input value="" required type="text" id="firstNameUpdate" class="form-control" pattern="^[A-Za-z]+$" />
                             </div>
-                        </div>
+                            <div class="col mr-1">
+                                <label for="lastName">Last Name</label>
+                                <input required type="text" id="lastNameUpdate" class="form-control" pattern="^[A-Za-z]+$" />
+                            </div>
+                        </section>
+                        <section id="b" class="row">
+                            <label for="email">Email</label>
+                            <input required type="email" id="emailUpdate" class="form-control" placeholder="name@example.com" />
+                            <label for="phoneNumber">Phone Number</label>
+                            <input required type="text" id="phoneUpdate" class="form-control" pattern="^\d+$" />
+                            <label for="birthDate">Birth Date</label>
+                            <input required type="date" id="birthDateUpdate" class="form-control" />
+                            <label for="salary">Salary</label>
+                            <input required type="number" id="salaryUpdate" class="form-control" min="5000" max="10000000" title="value must between 5000-10000000" />
+                            <label for="gender">Gender</label>
+                            <select required id="genderUpdate" class="form-control">
+                                <option value="">Select:</option>
+                                <option value="0">Male</option>
+                                <option value="1">Female</option>
+                            </select>
+                            <label for="university">University</label>
+                            <select required id="universityUpdate" class="form-control">
+                            </select>
+                            <label for="degree">Degree</label>
+                            <select required id="degreeUpdate" class="form-control">
+                                <option value="">Select:</option>
+                                <option value="D1">D1</option>
+                                <option value="D2">D2</option>
+                                <option value="D3">D3</option>
+                                <option value="D4">D4</option>
+                                <option value="S1">S1</option>
+                                <option value="S2">S2</option>
+                                <option value="S3">S3</option>
+                            </select>
+                            <label for="gpa">GPA</label>
+                            <input required type="text" id="gpaUpdate" class="form-control" pattern="^(?:4(?:\.0)?|[0-3](?:\.[0-99])?|0?\.[1-99])$" title="" />
+                        </section>
                     </div>
-                </section>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="submitUpdate" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

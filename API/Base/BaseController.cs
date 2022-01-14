@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using MCC61_API_Project.Repository.Interface;
 using Microsoft.AspNetCore.Http;
@@ -55,10 +56,17 @@ namespace MCC61_API_Project.Controllers
             }
         }
 
-        [HttpDelete]
-        public virtual ActionResult<Entity> Delete(Entity entity)
+        //[HttpDelete]
+        //public virtual ActionResult<Entity> Delete(Entity entity)
+        //{
+        //    var result = repository.Delete(entity);
+        //    return Ok(result);
+        //}
+
+        [HttpDelete("{key}")]
+        public virtual ActionResult<Entity> Delete(Key key)
         {
-            var result = repository.Delete(entity);
+            var result = repository.Delete(key);
             return Ok(result);
         }
     }

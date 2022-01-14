@@ -1,4 +1,5 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+﻿@import url(https://fonts.googleapis.com/css?family=Roboto);
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
 /*a.navbar-brand {
@@ -76,10 +77,23 @@ body {*/
     margin: 5px;
 }*/
 
+
+
+
 body{
-    max-width: 900px;
+    font-family: Roboto, sans-serif;
+    height: fit-content;
     margin: auto;
-    height: 2000px;
+}
+
+/*#chartGender {
+    width: 100% ;
+    margin: auto;
+}*/
+.pembungkus{
+    width: 100%;
+    height: fit-content;
+    margin-top: 0px;
 }
 
 h1#judul{
@@ -118,11 +132,16 @@ img#pokeImage{
 }
 
 .sub-container{
-    padding-top:100px;
+    padding-top:10px;
+    padding-bottom:100px;
 }
 
 #thPoke{
     background-color: skyblue;
+}
+
+#tPoke_wrapper{
+    width: 100%;
 }
 
 #pokemonCard{
@@ -135,3 +154,13 @@ img#pokeImage{
 .modal-body{
     background-color:aliceblue;
 }
+
+div.dataTables_wrapper{
+    width : 800px;
+    margin : 0 auto;
+}
+
+#chart-container {
+    height: 2000px;
+}
+

@@ -12,6 +12,7 @@ namespace MCC61_API_Project.Repository.Interface
         Entity Get(Key key); //Key ini nanti akan mewakili tipe data key dari setiap class
         int Insert(Entity entity);
         int Update(Entity entity);
-        int Delete(Entity entity);
+        //int Delete(Entity entity);
+        int Delete(Key key);
     }
 }

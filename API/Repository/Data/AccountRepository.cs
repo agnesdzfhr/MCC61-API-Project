@@ -193,5 +193,25 @@ namespace MCC61_API_Project.Repository.Data
 
         }
 
+        public Array ViewRole(string email)
+        {
+            var findEmail = context.Employees.Where(e => e.Email == email).FirstOrDefault();
+            var AccountRole = context.AccountRoles.Where(ar => ar.NIK == findEmail.NIK).Select(ar => ar.Role.RoleName).ToArray();
+            return AccountRole;
+        }
+
+        //public string ViewRoles(string email)
+        //{
+        //    var findRole = ViewRole(email);
+        //    var r = "";
+        //    for (int i = 0; i < findRole.Count; i++)
+        //    {
+        //        r += findRole[i];
+        //    }
+        //    Console.WriteLine(r);
+
+        //    return r;
+        //}
+
     }
 }
