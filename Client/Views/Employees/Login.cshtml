@@ -27,7 +27,7 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                 </div>
-                                <form action="/Accounts/Login" method="post" class="user">
+                                <form id="accountLogin" action="/Accounts/Login" method="post" class="user">
                                     <div class="form-group">
                                         <input type="email" name="Email" class="form-control form-control-user"
                                                id="emailEmployee" aria-describedby="emailHelp"
@@ -46,9 +46,12 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block" onclick="LoginEmployee()">
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Login
                                     </button>
+                                    <div class="row justify-content-center text-danger mt-2">
+                                        @TempData["message"]
+                                    </div>
                                     <hr>
                                     <a href="index.html" class="btn btn-google btn-user btn-block">
                                         <i class="fab fa-google fa-fw"></i> Login with Google
@@ -75,3 +78,4 @@
     </div>
 
 </div>
+

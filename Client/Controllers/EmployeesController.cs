@@ -7,6 +7,7 @@ using Client.Repositories.Data;
 using MCC61_API_Project.Models;
 using MCC61_API_Project.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers
@@ -32,7 +33,19 @@ namespace Client.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
-            return View();
+            var token = HttpContext.Session.GetString("JWToken");
+
+            if (token == null)
+            {
+                return View();
+            }
+
+            return RedirectToAction("index", "Employees");
+            //    if (HttpContext.Session.IsAvailable)
+            //    {
+            //        return RedirectToAction("index", "Employees");
+            //    }
+            //return View();
         }
         public IActionResult ForgotPassword()
         {

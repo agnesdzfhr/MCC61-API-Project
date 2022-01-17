@@ -59,7 +59,9 @@ namespace Client.Controllers
             if (token == null)
             {
                 //return RedirectToAction("index");
-                return RedirectToAction("Login", "Employees"); //untuk return ke halaman Home/index.cshtml
+                TempData["message"] = jwtToken.message;
+                return RedirectToAction("Login", "Employees"); //untuk return ke halaman Employees/Login.cshtml
+
             }
 
             HttpContext.Session.SetString("JWToken", token);

@@ -26,6 +26,7 @@ namespace Client.Repositories.Data
             {
                 BaseAddress = new Uri(address.link)
             };
+
         }
 
         public Object Login(LoginVM loginVM)
@@ -52,6 +53,7 @@ namespace Client.Repositories.Data
 
             string apiResponse = await result.Content.ReadAsStringAsync();
             token = JsonConvert.DeserializeObject<JWTtokenVM>(apiResponse);
+
 
             return token;
         }

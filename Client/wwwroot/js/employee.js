@@ -354,6 +354,7 @@ $('#formEmployee').submit(function (e) {
 
 });
 
+
 $('#updateEmployee').submit(function (e) {
     e.preventDefault();
 
