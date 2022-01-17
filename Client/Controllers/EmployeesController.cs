@@ -48,6 +48,7 @@ namespace Client.Controllers
             //    }
             //return View();
         }
+        [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
             return View();
