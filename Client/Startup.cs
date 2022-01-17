@@ -81,8 +81,10 @@ namespace Client
 
             app.UseRouting();
 
+            //untuk menggunakan session misal kl udh pake authorized
             app.UseSession();
 
+            //untuk mendapatkan token jwt
             app.Use(async (context, next) =>
             {
                 var JWToken = context.Session.GetString("JWToken");

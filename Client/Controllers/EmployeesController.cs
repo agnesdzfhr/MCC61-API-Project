@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Director, Manager")]
     public class EmployeesController : BaseController<Employee, EmployeeRepository, string>
     {
         private readonly EmployeeRepository repository;

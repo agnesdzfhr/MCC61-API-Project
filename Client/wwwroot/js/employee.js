@@ -73,7 +73,7 @@ $(document).ready(function () {
             },
         ],
         'ajax': {
-            'url': "Employees/GetRegisterData",
+            'url': "https://localhost:44357/Employees/GetRegisterData",
             'dataType': 'json',
             'dataSrc': 'result'
         },
@@ -163,7 +163,7 @@ function DeleteEmployee(nik) {
         if (result.isConfirmed) {
             var myTable = $('#tPoke').DataTable();
             $.ajax({
-                url: "Employees/DeleteRegisterData/" + nik,
+                url: "https://localhost:44357/Employees/DeleteRegisterData/" + nik,
                 type: "DELETE",
                 //contentType: "application/json;charset=utf-8",
             }).done((result) => {
@@ -206,7 +206,7 @@ function UpdateEmploye(nik) { //show detail
     })
     console.log(nik);
     $.ajax({
-        url: "Employees/GetRegisterByNIK/" + nik,
+        url: "https://localhost:44357/Employees/GetRegisterByNIK/" + nik,
     }).done((result) => {
         console.log("GPA: " + result.gpa);
         $('input#nikEmployee').val(`${nik}`);
@@ -250,7 +250,7 @@ function submitData() {
     var myTable = $('#tPoke').DataTable();
 
     $.ajax({
-        url: "Employees/Register",
+        url: "https://localhost:44357/Employees/Register",
         type: "POST",
         data: obj
     }).done((result) => {
@@ -395,7 +395,7 @@ $.ajax({
 //tampilan univ
 function FormAdd() {
     $.ajax({
-        url: "Universities/GetAll"
+        url: "https://localhost:44357/Universities/GetAll"
     }).done((result) => {
         var option = "<option>Select:</option>";
         $.each(result, function (key, val) {
@@ -411,7 +411,7 @@ function FormAdd() {
 
 //chart Univ
 $.ajax({
-    url: "Universities/GetAll"
+    url: "https://localhost:44357/Universities/GetAll"
 }).done((result) => {
     console.log("result")
     console.log(result);
