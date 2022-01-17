@@ -4,11 +4,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Client.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Client.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -28,16 +30,19 @@ namespace Client.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult NotFound404()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Unauthorized401()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Forbidden403()
         {
             return View();
