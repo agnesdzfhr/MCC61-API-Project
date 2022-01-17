@@ -135,12 +135,16 @@
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Employees" asp-action="Index">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Employee</span>
-                </a>
-            </li>
+            @if (User.IsInRole("Director") || User.IsInRole("Manager"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Employees" asp-action="Index">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Employee</span>
+                    </a>
+                </li>
+            }
+
 
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Exercises" asp-action="Index">

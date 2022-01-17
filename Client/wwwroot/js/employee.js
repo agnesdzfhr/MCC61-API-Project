@@ -89,10 +89,13 @@ $(document).ready(function () {
                 'data': 'nik',
             },
             {
+                
                 'width': '200px',
                 'data': null,
                 'render': (data) => {
-                    return (data.firstName + " " + data.lastName);
+                    var fullName = data.firstName + " " + data.lastName;
+                    const fullNameCapital = fullName.charAt(0).toUpperCase() + fullName.slice(1);
+                    return (fullNameCapital);
                 }
             },
             {
@@ -260,7 +263,7 @@ function submitData() {
                 icon: 'success',
                 title: 'Success',
                 text: result.message,
-                type: 'success'
+
             });
         }
         else
@@ -269,7 +272,7 @@ function submitData() {
                 icon: 'error',
                 title: 'Error',
                 text: result.message,
-                type: 'error'
+
             });
         }
         $('.modal#modalRegister').modal("hide");
@@ -281,7 +284,7 @@ function submitData() {
             icon: 'failed',
             title: 'Failed',
             text: error.message,
-            type: 'failed'
+
         });
     })
 }
@@ -434,16 +437,16 @@ function GetChartUniv(univName) {
         url: "https://localhost:44303/API/Employees/GetRegisterData"
     }).done((result) => {
         var employeeUniv = new Array();
-        $.each(result, function (key, val) {
+        $.each(result.result, function (key, val) {
             var empUniv = val.universityName;
             employeeUniv.push(empUniv);
             var test = univName.filter((u) => {
                 return u == empUniv;
             });
-
-            console.log(test);
         });
         var univCL = new Array();
+        console.log("Univ Name: " + univName);
+        console.log("Employee Univ: " + employeeUniv);
         $.each(univName, function (key, val) {
             var univChart = employeeUniv.filter((u) => {
                 return u == val;
@@ -482,6 +485,10 @@ function GetChartUniv(univName) {
         console.log("error");
         console.log(error);
     })
+}
+
+function goBack() {
+    window.history.back;
 }
 
 function LoginEmployee() {

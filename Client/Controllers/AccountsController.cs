@@ -66,7 +66,7 @@ namespace Client.Controllers
 
             HttpContext.Session.SetString("JWToken", token);
 
-            return RedirectToAction("index", "Employees");
+            return RedirectToAction("index", "Home");
         }
 
         [Authorize]
@@ -74,7 +74,7 @@ namespace Client.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("index", "Home");
+            return RedirectToAction("Login", "Employees");
         }
 
         [HttpPost]

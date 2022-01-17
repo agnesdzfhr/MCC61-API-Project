@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers
 {
+    //[Authorize]
     [Authorize(Roles = "Director, Manager")]
     public class EmployeesController : BaseController<Employee, EmployeeRepository, string>
     {
@@ -58,6 +59,7 @@ namespace Client.Controllers
             var result = await repository.GetRegisterData();
             return Json(result);
         }
+
 
         [HttpGet("Employees/GetRegisterByNIK/{NIK}")]
         public async Task<JsonResult> GetRegisterByNIK(string NIK)

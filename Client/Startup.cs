@@ -102,7 +102,13 @@ namespace Client
 
                 if (response.StatusCode == (int)HttpStatusCode.Unauthorized)
                 {
-                    response.Redirect("Employees/Login");
+                    response.Redirect("/Home/Unauthorized401");
+                }else if(response.StatusCode == (int)HttpStatusCode.NotFound)
+                {
+                    response.Redirect("/Home/NotFound404");
+                }else if(response.StatusCode == (int)HttpStatusCode.Forbidden)
+                {
+                    response.Redirect("/Home/Forbidden403");
                 }
 
             });
